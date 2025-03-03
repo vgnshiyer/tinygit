@@ -8,6 +8,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", type=str)
     parser.add_argument("--message", type=str, required=False)
+    parser.add_argument("--file", type=str, required=False)
     args = parser.parse_args()
 
     tinygit = TinyGit()
@@ -18,9 +19,13 @@ def main():
     elif command == "status":
         tinygit.set_command(StatusCmd())
     elif command == "commit":
-        tinygit.set_command(CommitCmd())
+        if not args.message:
+            raise ValueError("Message is required for commit command")
+        tinygit.set_command(CommitCmd(message=args.message))
     elif command == "add":
-        tinygit.set_command(AddCmd())
+        if not args.file:
+            raise ValueError("File is required for add command")
+        tinygit.set_command(AddCmd(file_path=args.file))
 
     print(tinygit.run())
 

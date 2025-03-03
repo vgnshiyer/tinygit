@@ -11,7 +11,6 @@ class Index:
       - file1_path
       - file2_path
       - ...
-
     """
 
     def __init__(self, index_path: str):
@@ -21,10 +20,11 @@ class Index:
     def load(self):
         with open(self.index_path, "r") as f:
             data = yaml.safe_load(f)
-            self.files = data["files"]
+            self.files = data["files"] if data else []
 
     def add_file(self, file_path: str):
-        self.files.append(file_path)
+        if file_path not in self.files:
+            self.files.append(file_path)
 
     def save(self):
         with open(self.index_path, "w") as f:

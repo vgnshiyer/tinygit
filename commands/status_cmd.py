@@ -32,10 +32,10 @@ class StatusCmd(TinyGitCmd):
         status = f"On branch {current_branch}\n"
 
         status += "Changes to be committed:\n"
-        status += f"        {files_staged_for_commit}\n"
+        status += f"        {', '.join(files_staged_for_commit)}\n"
 
         status += "Changes not staged for commit:\n"
-        status += f"        {files_not_staged_for_commit}\n"
+        status += f"        {', '.join(files_not_staged_for_commit)}\n"
 
         return status
 
@@ -44,4 +44,18 @@ class StatusCmd(TinyGitCmd):
             return f.read().strip()
 
     def _get_files_in_working_directory(self, config: Config) -> list[str]:
-        return os.listdir(config.repo_path)
+        files = []
+        git_dir = config.git_dir
+
+        for root, dirs, filenames in os.walk("."):
+            if git_dir in dirs:
+                dirs.remove(git_dir)
+
+            for filename in filenames:
+                file_path = os.path.join(root, filename)
+                normalized_path = os.path.normpath(file_path)
+                if git_dir in normalized_path.split(os.sep):
+                    continue
+                files.append(normalized_path)
+
+        return files
