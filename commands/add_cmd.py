@@ -26,7 +26,13 @@ class AddCmd(TinyGitCmd):
 
         index = Index(config.index_path)
         index.load()
-        index.add_file(self.file_path)
+
+        if os.path.isdir(self.file_path):
+            for root, _, files in os.walk(self.file_path):
+                for file in files:
+                    index.add_file(os.path.join(root, file))
+        else:
+            index.add_file(self.file_path)
         index.save()
 
         return "Added file {} to the staging area".format(self.file_path)
