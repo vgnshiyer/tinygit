@@ -22,10 +22,13 @@ class Index:
             data = yaml.safe_load(f)
             self.files = data["files"] if data else []
 
-    def add_file(self, file_path: str):
-        if file_path not in self.files:
-            self.files.append(file_path)
+    def add_file(self, path: str):
+        if path not in self.files:
+            self.files.append(path)
 
     def save(self):
         with open(self.index_path, "w") as f:
             yaml.dump({"files": self.files}, f)
+
+    def clear(self):
+        self.files = []

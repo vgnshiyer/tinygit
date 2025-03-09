@@ -7,8 +7,8 @@ from tinygit import TinyGit
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", type=str)
-    parser.add_argument("--message", type=str, required=False)
-    parser.add_argument("--file", type=str, required=False)
+    parser.add_argument("-m", "--message", type=str, required=False)
+    parser.add_argument("-f", "--file", type=str, required=False)
     args = parser.parse_args()
 
     tinygit = TinyGit()
@@ -25,7 +25,7 @@ def main():
     elif command == "add":
         if not args.file:
             raise ValueError("File is required for add command")
-        tinygit.set_command(AddCmd(file_path=args.file))
+        tinygit.set_command(AddCmd(path=args.file))
 
     print(tinygit.run())
 

@@ -2,12 +2,12 @@ import os
 
 
 class Config:
-    git_dir = ".tinygit"
-    index_file = "index"
-    head_file = "HEAD"
-    refs_dir = "refs"
-    objects_dir = "objects"
-    default_branch = "main"
+    git_dir = ".tinygit"  # directory for storing git metadata
+    index_file = "index"  # file for storing the staging area
+    head_file = "HEAD"  # file for storing the current branch
+    refs_dir = "refs"  # directory for storing branch references
+    objects_dir = "objects"  # directory for storing git objects
+    default_branch = "main"  # default branch name
 
     def __init__(self):
         self.repo_path = os.path.join(os.getcwd(), self.git_dir)

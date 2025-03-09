@@ -30,6 +30,16 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "cwd": "${workspaceFolder}/testrepo"
+        },
+        {
+            "name": "TinyGit: Commit",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "args": ["commit", "-m", "Initial commit"],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}/testrepo"
         }
     ]
 } 

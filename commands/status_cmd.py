@@ -39,10 +39,6 @@ class StatusCmd(TinyGitCmd):
 
         return status
 
-    def _get_current_branch(self, config: Config) -> str:
-        with open(config.head_path, "r") as f:
-            return f.read().strip()
-
     def _get_files_in_working_directory(self, config: Config) -> list[str]:
         files = []
         git_dir = config.git_dir
